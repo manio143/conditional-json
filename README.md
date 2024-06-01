@@ -1,6 +1,6 @@
 # conditional-json
 
-Library for evalutating expressions in JSON data.
+Library for evaluating expressions in JSON data.
 
 ## Example
 
@@ -19,10 +19,10 @@ Library for evalutating expressions in JSON data.
 ```
 
 ```typescript
-import { Conditional } from "conditional-json";
+import { Conditional } from 'conditional-json';
 
 let data = JSON.parse(text);
-let evaluted = Conditional.eval(data, {windows: 4, includeBasement: true});
+let evaluted = Conditional.eval(data, { windows: 4, includeBasement: true });
 // {
 //     "House": {
 //         "Doors": 1,
