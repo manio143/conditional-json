@@ -8,6 +8,7 @@
 	},
 	"devDependencies": {
 		"@types/jest": "~29.5",
+		"@types/nearley": "^2.11.5",
 		"@types/node": "~20",
 		"@typescript-eslint/eslint-plugin": "~7.6",
 		"@typescript-eslint/parser": "~7.6",
@@ -31,11 +32,13 @@
 		"lint": "eslint . --ext .ts --ext .mts",
 		"test": "jest --coverage",
 		"prettier": "prettier --config .prettierrc --write .",
-		"test:watch": "jest --watch"
+		"test:watch": "jest --watch",
+		"grammar:compile": "yarn nearleyc src/grammar.ne -o src/grammar.js"
 	},
 	"author": "Marian Dziubiak",
 	"license": "MIT",
 	"dependencies": {
+		"nearley": "^2.20.1",
 		"tslib": "~2.6"
 	},
 	"volta": {
