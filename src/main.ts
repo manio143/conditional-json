@@ -175,13 +175,15 @@ export const applyConditionals = (
 			return result;
 		} catch (reason) {
 			if (breakOnError) throw reason;
-			errorLogger(reason);
+			errorLogger && errorLogger(reason);
 			return data;
 		}
 	}
 	if (typeof data !== 'object') return data;
 	else if (Array.isArray(data))
-		return data.map((d) => applyConditionals(d, context, errorLogger, userFunctions, breakOnError));
+		return data
+			.map((d) => applyConditionals(d, context, errorLogger, userFunctions, breakOnError))
+			.filter((d) => d !== undefined);
 
 	if (Object.keys(data).every((key) => key.startsWith('$if['))) {
 		for (const [key, entry] of Object.entries(data)) {
@@ -191,14 +193,14 @@ export const applyConditionals = (
 				if (typeof result !== 'boolean') {
 					const reason = `Conditional expression evaluated to a non boolean value: ${key}`;
 					if (breakOnError) throw reason;
-					errorLogger(reason);
+					errorLogger && errorLogger(reason);
 				} else if (result) return applyConditionals(entry, context, errorLogger, userFunctions, breakOnError);
 			} catch (reason) {
 				if (breakOnError) throw reason;
-				errorLogger(reason);
+				errorLogger && errorLogger(reason);
 			}
 		}
-		return null;
+		return undefined;
 	} else {
 		const newObj = {};
 		for (const [key, entry] of Object.entries(data)) {

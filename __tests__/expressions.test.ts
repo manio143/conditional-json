@@ -82,6 +82,12 @@ describe('evaluateExpression', () => {
 			expect(evaluateExpression('sum(sum(2, 3), sum(4, 3))', { sum })).toEqual(12);
 			expect(sum).toHaveBeenCalled();
 		});
+		it('user provided function returns non-scalar', () => {
+			const f = jest.fn<number, [SimpleExpression]>(() => ({}) as number);
+			expect(() => evaluateExpression('f()', { f })).toThrow(
+				"The function 'f' returned a value '{}' which is not one of string|number|boolean|Date.",
+			);
+		});
 		describe('built-in functions', () => {
 			it('not(true)', () => expect(evaluateExpression('not(true)')).toEqual(false));
 			it('not(false)', () => expect(evaluateExpression('not(false)')).toEqual(true));
@@ -126,6 +132,10 @@ describe('evaluateExpression', () => {
 			it('iff(true)', () =>
 				expect(() => evaluateExpression('iff(true)')).toThrow(
 					"Function 'iff' expects 3 arguments (bool, expression if true, expression if false).",
+				));
+			it('iff(5, 6, 7)', () =>
+				expect(() => evaluateExpression('iff(5, 6, 7)')).toThrow(
+					"Function 'iff' expects a bool value for the first argument, received 'number'.",
 				));
 			it('iff evaluates lazily (true)', () => {
 				const f = jest.fn<number, [SimpleExpression]>(() => 42);
