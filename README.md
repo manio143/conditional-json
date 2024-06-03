@@ -19,10 +19,10 @@ Library for evaluating expressions in JSON data.
 ```
 
 ```typescript
-import { Conditional } from 'conditional-json';
+import { applyConditionals } from 'conditional-json';
 
 let data = JSON.parse(text);
-let evaluted = Conditional.eval(data, { windows: 4, basementRooms: 2 });
+let evaluated = applyConditionals(data, { windows: 4, basementRooms: 2 });
 // {
 //     "House": {
 //         "Doors": 1,
@@ -37,6 +37,7 @@ let evaluted = Conditional.eval(data, { windows: 4, basementRooms: 2 });
 ## Expression language
 
 The language is fairly simple:
+
 1. Lazy logical operators `&&` and `||`
 2. Comparison operators `==`, `!=`, `<`, `>`, `<=`, `>=`
 3. Function application `f(e1, e2, ...)`
@@ -44,6 +45,7 @@ The language is fairly simple:
 5. Constants `12`, `'Abc'`, `true`
 
 Built-in functions:
-* `date(string)` - converts a string into a date
-* `not(bool)` - inverts a boolean value
-* `iff(bool, ifTrue, ifFalse)` - lazy conditional function
+
+- `date(string)` - converts a string into a date
+- `not(bool)` - inverts a boolean value
+- `iff(bool, ifTrue, ifFalse)` - lazy conditional function
