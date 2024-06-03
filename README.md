@@ -1,6 +1,7 @@
 # conditional-json
 
 Library for evaluating expressions in JSON data.
+Enables conditional section in your JSON data based on a provided context.
 
 ## Example
 

@@ -1,5 +1,5 @@
 {
-	"name": "conditional-json",
+	"name": "conditional-expressions-json",
 	"version": "0.1.0",
 	"description": "Library for evaluating expressions in JSON data.",
 	"type": "module",
@@ -37,6 +37,12 @@
 	},
 	"author": "Marian Dziubiak",
 	"license": "MIT",
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/manio143/conditional-json"
+	},
+	"files": ["build/src/*.js"],
+	"main": "main.js",
 	"dependencies": {
 		"nearley": "^2.20.1",
 		"tslib": "~2.6"
