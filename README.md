@@ -34,6 +34,8 @@ let evaluated = applyConditionals(data, { windows: 4, basementRooms: 2 });
 // }
 ```
 
+See unit tests for more examples.
+
 ## Expression language
 
 The language is fairly simple:
@@ -49,3 +51,5 @@ Built-in functions:
 - `date(string)` - converts a string into a date
 - `not(bool)` - inverts a boolean value
 - `iff(bool, ifTrue, ifFalse)` - lazy conditional function
+
+Contributions welcome for more useful functions.
