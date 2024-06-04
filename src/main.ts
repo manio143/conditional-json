@@ -159,9 +159,12 @@ export const evaluateExpression = (
 	functions?: FunctionStore,
 	context?: EvaluationContext,
 ): SimpleExpression['value'] => {
-	const parser = new Parser(grammar);
+	const parser = new Parser(grammar, { keepHistory: true });
 	parser.feed(s.trim());
 	const expr = parser.finish()[0] as Expression;
+	if (expr === undefined) {
+		throw `Unexpected end of input: '${s}'`;
+	}
 	const functionStore = {
 		...builtInFunctions,
 		...(functions ?? {}),
@@ -193,7 +196,8 @@ export const applyConditionals = (
 		try {
 			const result = evaluateExpression(data.substring(1, data.length - 1), userFunctions, context);
 			return result;
-		} catch (reason) {
+		} catch (reason_) {
+			const reason = `Failed to evaluate conditional expression '${data}' -> ${reason_}`;
 			if (breakOnError) throw reason;
 			errorLogger && errorLogger(reason);
 			return data;
@@ -215,7 +219,8 @@ export const applyConditionals = (
 					if (breakOnError) throw reason;
 					errorLogger && errorLogger(reason);
 				} else if (result) return applyConditionals(entry, context, errorLogger, userFunctions, breakOnError);
-			} catch (reason) {
+			} catch (reason_) {
+				const reason = `Failed to evaluate conditional expression '${key}' -> ${reason_}`;
 				if (breakOnError) throw reason;
 				errorLogger && errorLogger(reason);
 			}

@@ -57,14 +57,16 @@ describe('applyConditionals', () => {
 		};
 		const error: string[] = [];
 		expect(applyConditionals(data, {}, (err) => error.push(err))).toEqual(data);
-		expect(error).toEqual(["Function 'iff' expects 3 arguments (bool, expression if true, expression if false)."]);
+		expect(error).toEqual([
+			"Failed to evaluate conditional expression '[iff()]' -> Function 'iff' expects 3 arguments (bool, expression if true, expression if false).",
+		]);
 	});
 	it('invalid inline expression, breakOnError: true', () => {
 		const data = {
 			a: '[iff()]',
 		};
 		expect(() => applyConditionals(data, {}, undefined, undefined, true)).toThrow(
-			"Function 'iff' expects 3 arguments (bool, expression if true, expression if false).",
+			"Failed to evaluate conditional expression '[iff()]' -> Function 'iff' expects 3 arguments (bool, expression if true, expression if false).",
 		);
 	});
 	it('invalid conditional, breakOnError: false', () => {
@@ -75,7 +77,10 @@ describe('applyConditionals', () => {
 		};
 		const error: string[] = [];
 		expect(applyConditionals(data, { option: 1 }, (err) => error.push(err))).toEqual(0);
-		expect(error).toEqual(["The function 'f' was not found.", "The function 'g' was not found."]);
+		expect(error).toEqual([
+			"Failed to evaluate conditional expression '$if[$.option == f()]' -> The function 'f' was not found.",
+			"Failed to evaluate conditional expression '$if[$.option == g()]' -> The function 'g' was not found.",
+		]);
 	});
 	it('invalid conditional, breakOnError: true', () => {
 		const data = {
@@ -84,7 +89,7 @@ describe('applyConditionals', () => {
 			'$if[true]': 0,
 		};
 		expect(() => applyConditionals(data, { option: 1 }, undefined, undefined, true)).toThrow(
-			"The function 'f' was not found.",
+			"Failed to evaluate conditional expression '$if[$.option == f()]' -> The function 'f' was not found.",
 		);
 	});
 	it('invalid conditional value type, breakOnError: false', () => {
@@ -102,5 +107,9 @@ describe('applyConditionals', () => {
 		expect(() => applyConditionals(data, { option: 1 }, undefined, undefined, true)).toThrow(
 			'Conditional expression evaluated to a non boolean value: $if[5]',
 		);
+	});
+	it('from JSON string', () => {
+		const data = JSON.parse('{ "$if[true]": "[iff(true, 42, 55)]" }');
+		expect(applyConditionals(data)).toEqual(42);
 	});
 });

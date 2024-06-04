@@ -153,4 +153,14 @@ describe('evaluateExpression', () => {
 			});
 		});
 	});
+	describe('language error', () => {
+		it('missing parenthesis at the end', () => {
+			expect(() => evaluateExpression('iff(false, 42, 55')).toThrow(
+				"Unexpected end of input: 'iff(false, 42, 55'",
+			);
+		});
+		it('invalid input', () => {
+			expect(() => evaluateExpression('iff abc')).toThrow('Syntax error at line 1 col 4');
+		});
+	});
 });
