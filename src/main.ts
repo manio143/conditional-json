@@ -147,6 +147,13 @@ const specialFunctions: {
 
 const grammar = Grammar.fromCompiled(grammarDefinition);
 
+/**
+ * Evaluates an expression in the custom DSL.
+ * @param s Input string containing the expression.
+ * @param functions Set of user provided functions.
+ * @param context Evaluation context which can be accessed during expression evaluation.
+ * @returns Result of the evaluation.
+ */
 export const evaluateExpression = (
 	s: string,
 	functions?: FunctionStore,
@@ -162,6 +169,19 @@ export const evaluateExpression = (
 	return evaluate_(expr, functionStore, context ?? {}).value;
 };
 
+/**
+ * Traverses the properties of the provided object
+ * and for any conditional expression `$if[]` and an inline expression `"[]"`
+ * evaluates the expression and substitutes a value in the returned object.
+ * @param data Input object.
+ * @param context Evaluation context which can be accessed during expression evaluation.
+ * @param errorLogger Function which receives error messages (if `breakOnError`} is false).
+ * @param userFunctions Set of user provided functions.
+ * @param breakOnError Whether to stop on first error and throw or log them with `errorLogger` and continue.
+ * Error in inline expression results in the input string to stay in place.
+ * Error in conditional expressions results in that block not being used (as if evaluated to false).
+ * @returns A new object with conditional sections substituted for evaluated objects.
+ */
 export const applyConditionals = (
 	data: unknown,
 	context?: EvaluationContext,
