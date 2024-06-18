@@ -1,6 +1,6 @@
 {
 	"name": "conditional-expressions-json",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "Library for evaluating expressions in JSON data.",
 	"type": "module",
 	"engines": {
@@ -33,7 +33,7 @@
 		"test": "jest --coverage",
 		"prettier": "prettier --config .prettierrc --write .",
 		"test:watch": "jest --watch",
-		"grammar:compile": "yarn nearleyc src/grammar.ne -o src/grammar.js"
+		"grammar:compile": "yarn nearleyc src/grammar.ne -o src/grammar.mjs"
 	},
 	"author": "Marian Dziubiak",
 	"license": "MIT",
