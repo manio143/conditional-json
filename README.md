@@ -1,4 +1,4 @@
-# conditional-json
+# conditional-expressions-json
 
 Library for evaluating expressions in JSON data.
 Enables conditional section in your JSON data based on a provided context.
@@ -20,7 +20,7 @@ Enables conditional section in your JSON data based on a provided context.
 ```
 
 ```typescript
-import { applyConditionals } from 'conditional-json';
+import { applyConditionals } from 'conditional-expressions-json';
 
 let data = JSON.parse(text);
 let evaluated = applyConditionals(data, { windows: 4, basementRooms: 2 });

@@ -1,7 +1,7 @@
 @preprocessor esmodule
 
 @{%
-const moo = require("moo");
+import moo from 'moo';
 
 const lexer = moo.compile({
   whiteSpace: { match: /[ \t\n]+/, lineBreaks: true },

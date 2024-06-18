@@ -1,5 +1,5 @@
 import { Parser, Grammar } from 'nearley';
-import grammarDefinition from './grammar.js';
+import grammarDefinition from './grammar.mjs';
 
 // type Settings = {
 // 	stopOnInvalidExpression: boolean;
